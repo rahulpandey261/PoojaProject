@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PoojaProject</string>
+    <string name="ConnectionChangeReceiver">NetworkConnection</string>
+    <string name="hello_world">Hello world</string>
 </resources>
