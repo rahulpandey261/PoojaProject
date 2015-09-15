@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="closeDrawer">close</string>
+    <string name="USER_DATA">com.sec.pooja.poojaproject.USER_DATA</string>
+    <string name="user_name">USER_NAME</string>
+    <string name="user_pass">USER_PASS</string>
+</resources>
