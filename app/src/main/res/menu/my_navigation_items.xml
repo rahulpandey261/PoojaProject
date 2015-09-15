@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/inbox"
+            android:checked="false"
+            android:icon="@drawable/ic_person_white_18dp"
+            android:title="Login" />
+        <item
+            android:id="@+id/inbox1"
+            android:checked="false"
+            android:icon="@drawable/ic_person_white_18dp"
+            android:title="Login" />
+
+        <item
+            android:id="@+id/inbox2"
+            android:checked="false"
+            android:icon="@drawable/ic_person_white_18dp"
+            android:title="Login" />
+
+        <item
+            android:id="@+id/inbox3"
+            android:checked="false"
+            android:icon="@drawable/ic_person_white_18dp"
+            android:title="Sign Out" />
+
+    </group>
+
+</menu>

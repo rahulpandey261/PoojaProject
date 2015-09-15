@@ -1,5 +1,6 @@
 package com.sec.pooja.poojaproject.Activities;
 
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.login_title);
+        toolbar.setTitle(R.string.home_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -51,7 +52,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Hello World", Toast.LENGTH_LONG).show();
                         return true;
                     case R.id.inbox3:
-                        Toast.makeText(MainActivity.this, "Hello World", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Logout", Toast.LENGTH_LONG).show();
+                        SharedPreferences sp = getApplicationContext().getSharedPreferences(getString(R.string.USER_DATA), MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString(getString(R.string.user_name), null);
+                        editor.putString(getString(R.string.user_pass), null);
+                        editor.commit();
                         return true;
                 }
                 return false;
