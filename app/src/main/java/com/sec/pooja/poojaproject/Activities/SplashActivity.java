@@ -15,25 +15,19 @@ import com.sec.pooja.poojaproject.Utils.Utils;
  */
 public class SplashActivity extends Activity {
     private boolean mCheckConnection = false;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_layout);
-        Context mContext = getBaseContext();
-
-        if (Utils.checkConnection(mContext)) {
-            mCheckConnection = true;
-        } else {
-            mCheckConnection = false;
-        }
-
+        mContext = getApplicationContext();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mCheckConnection) {
+                if (Utils.checkConnection(mContext)) {
                     Toast.makeText(getBaseContext(), "Connection available.Background data loaded", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    Intent intent = new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
