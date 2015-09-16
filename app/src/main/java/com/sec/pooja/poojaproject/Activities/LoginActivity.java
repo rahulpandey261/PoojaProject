@@ -1,20 +1,32 @@
 package com.sec.pooja.poojaproject.Activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.sec.pooja.poojaproject.ApplicationClass.MyAppclass;
 import com.sec.pooja.poojaproject.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
+    String login_url = "http://192.168.1.101/poojademo/ReadUser.php";
+    ProgressDialog PD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,37 +42,71 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Intent intent;
         switch (v.getId()) {
             case R.id.register:
-                intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
                 break;
             case R.id.loginbutton:
-                if (checkLogin()) {
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
-                }
+                showDailog();
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        JSONObject jsonObject = null;
+                        try {
+                            PD.hide();
+                            jsonObject = new JSONObject(s);
+                            is_logIn = jsonObject.getBoolean("success");
+                            if (is_logIn) {
+                                rememberMe();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        PD.hide();
+                        Toast.makeText(LoginActivity.this, "Internal Error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                MyAppclass.getInstance().addToReqQueue(stringRequest);
                 break;
         }
 
     }
 
-    private boolean checkLogin() {
+    private void showDailog() {
+        PD = new ProgressDialog(this);
+        PD.setCancelable(false);
+        PD.show();
+    }
+
+    boolean is_logIn = false;
+
+    private boolean rememberMe() {
         String mobile_num = ((EditText) findViewById(R.id.mobilenumber)).getText().toString();
         String pass = ((EditText) findViewById(R.id.password)).getText().toString();
         //perform Network operation for verify the login.
         //if valid user then save it into local space for futher login
         //if(net is returning successfull login then save it.
-        SharedPreferences sp = getApplicationContext().getSharedPreferences(getString(R.string.USER_DATA), MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(getString(R.string.user_name), mobile_num);
-        editor.putString(getString(R.string.user_pass), pass);
-        editor.commit();
-        return true;
+        Log.v("Rahul", "" + is_logIn);
+        if (is_logIn) {
+            SharedPreferences sp = getApplicationContext().getSharedPreferences(getString(R.string.USER_DATA), MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString(getString(R.string.user_name), mobile_num);
+            editor.putString(getString(R.string.user_pass), pass);
+            editor.commit();
+            return true;
+        }
+        return false;
     }
 }
