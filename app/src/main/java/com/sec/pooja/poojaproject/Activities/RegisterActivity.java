@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sec.pooja.poojaproject.ApplicationClass.MyAppclass;
+import com.sec.pooja.poojaproject.Constants.Constantfun;
 import com.sec.pooja.poojaproject.R;
 
 import org.json.JSONException;
@@ -32,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String emailID;
     private String userPass;
     private String userAdd;
-    String register_url = "http://192.168.1.101/poojademo/register.php";
+    String register_url = Constantfun.weburl+"register.php";
     private boolean is_logIn;
 
     @Override
@@ -73,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     PD.hide();
                     jsonObject = new JSONObject(s);
                     is_logIn = jsonObject.getBoolean("success");
+                    Log.v("Rahul", "" + is_logIn);
                     if (is_logIn) {
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);

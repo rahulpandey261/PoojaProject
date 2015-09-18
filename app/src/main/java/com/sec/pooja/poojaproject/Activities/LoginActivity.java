@@ -12,21 +12,28 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sec.pooja.poojaproject.ApplicationClass.MyAppclass;
+import com.sec.pooja.poojaproject.Constants.Constantfun;
 import com.sec.pooja.poojaproject.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
-    String login_url = "http://192.168.1.101/poojademo/ReadUser.php";
+    String login_url = Constantfun.weburl+"ReadUser.php";
     ProgressDialog PD;
+    private String mobile_num;
+    private String pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,38 +57,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.loginbutton:
                 showDailog();
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String s) {
-                        JSONObject jsonObject = null;
-                        try {
-                            PD.hide();
-                            jsonObject = new JSONObject(s);
-                            is_logIn = jsonObject.getBoolean("success");
-                            if (is_logIn) {
-                                rememberMe();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        PD.hide();
-                        Toast.makeText(LoginActivity.this, "Internal Error", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                MyAppclass.getInstance().addToReqQueue(stringRequest);
+                mobile_num = ((EditText) findViewById(R.id.mobilenumber)).getText().toString();
+                pass = ((EditText) findViewById(R.id.password)).getText().toString();
+                Log.v("Rahul","Do login");
+                userLogin();
                 break;
         }
 
+    }
+
+    private void userLogin() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                JSONObject jsonObject = null;
+                try {
+                    PD.hide();
+                    Log.v("Rahul",s);
+                    jsonObject = new JSONObject(s);
+                    is_logIn = jsonObject.getBoolean("success");
+                    if (is_logIn) {
+                        rememberMe();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                PD.hide();
+                Toast.makeText(LoginActivity.this, "Internal Error", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("USER_NUM", mobile_num);
+                params.put("USER_PASS", pass);
+                return params;
+            }
+        };
+        MyAppclass.getInstance().addToReqQueue(stringRequest);
     }
 
     private void showDailog() {
@@ -93,8 +116,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     boolean is_logIn = false;
 
     private boolean rememberMe() {
-        String mobile_num = ((EditText) findViewById(R.id.mobilenumber)).getText().toString();
-        String pass = ((EditText) findViewById(R.id.password)).getText().toString();
         //perform Network operation for verify the login.
         //if valid user then save it into local space for futher login
         //if(net is returning successfull login then save it.

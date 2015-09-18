@@ -13,4 +13,13 @@
     <string name="USER_DATA">com.sec.pooja.poojaproject.USER_DATA</string>
     <string name="user_name">USER_NAME</string>
     <string name="user_pass">USER_PASS</string>
+    <string-array name="main_item">
+        <item>Hello </item>
+        <item>Hello </item>
+        <item>Hello </item>
+        <item>Hello </item>
+        <item>Hello </item>
+        <item>Hello </item>
+    </string-array>
+    <string name="title_activity_detail_list_item">DetailListItem</string>
 </resources>

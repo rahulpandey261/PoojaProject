@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-
+    <group
+        android:id="@+id/grp2"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/inbox"
             android:checked="false"
@@ -26,5 +27,23 @@
             android:title="Sign Out" />
 
     </group>
-
+    <item android:title="Communicate us">
+        <menu>
+            <item
+                android:id="@+id/inbox4"
+                android:checked="false"
+                android:icon="@drawable/ic_person_white_18dp"
+                android:title="Contact Us" />
+            <item
+                android:id="@+id/inbox5"
+                android:checked="false"
+                android:icon="@drawable/ic_person_white_18dp"
+                android:title="Rate Us" />
+            <item
+                android:id="@+id/inbox6"
+                android:checked="false"
+                android:icon="@drawable/ic_person_white_18dp"
+                android:title="Help" />
+        </menu>
+    </item>
 </menu>
