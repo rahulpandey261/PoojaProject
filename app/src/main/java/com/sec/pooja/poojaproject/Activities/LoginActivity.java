@@ -30,7 +30,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
-    String login_url = Constantfun.weburl+"ReadUser.php";
+    String login_url = Constantfun.weburl + "ReadUser.php";
     ProgressDialog PD;
     private String mobile_num;
     private String pass;
@@ -44,14 +44,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(toolbar);
 
         findViewById(R.id.register).setOnClickListener(this);
+        findViewById(R.id.skip).setOnClickListener(this);
         findViewById(R.id.loginbutton).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.register:
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -59,8 +61,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 showDailog();
                 mobile_num = ((EditText) findViewById(R.id.mobilenumber)).getText().toString();
                 pass = ((EditText) findViewById(R.id.password)).getText().toString();
-                Log.v("Rahul","Do login");
+                Log.v("Rahul", "Do login");
                 userLogin();
+                break;
+            case R.id.skip:
+                intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
 
@@ -73,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 JSONObject jsonObject = null;
                 try {
                     PD.hide();
-                    Log.v("Rahul",s);
+                    Log.v("Rahul", s);
                     jsonObject = new JSONObject(s);
                     is_logIn = jsonObject.getBoolean("success");
                     if (is_logIn) {

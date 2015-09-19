@@ -66,5 +66,12 @@
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="20dp" />
         </LinearLayout>
+        <Button
+            android:id="@+id/skip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/holo_blue_dark"
+            android:text="Skip" />
     </LinearLayout>
 </LinearLayout>
