@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 PD.hide();
+                volleyError.printStackTrace();
                 Toast.makeText(LoginActivity.this, "Internal Error", Toast.LENGTH_SHORT).show();
             }
         }) {

@@ -12,19 +12,19 @@
             android:id="@+id/inbox1"
             android:checked="false"
             android:icon="@drawable/ic_person_white_18dp"
-            android:title="Login" />
+            android:title="My Address" />
 
         <item
             android:id="@+id/inbox2"
             android:checked="false"
             android:icon="@drawable/ic_person_white_18dp"
-            android:title="Login" />
+            android:title="My Order" />
 
         <item
             android:id="@+id/inbox3"
             android:checked="false"
             android:icon="@drawable/ic_person_white_18dp"
-            android:title="Sign Out" />
+            android:title="Logout" />
 
     </group>
     <item android:title="Communicate us">

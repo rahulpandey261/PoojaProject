@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(this, LoginActivity.class);
                     startActivity(intent);
                 }
+                //navigationView.getMenu().getItem(3).setVisible(true);
                 return true;
             case R.id.inbox1:
                 Toast.makeText(MainActivity.this, "Hello World", Toast.LENGTH_LONG).show();
@@ -157,5 +158,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.search:
+                Toast.makeText(MainActivity.this, "search", Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

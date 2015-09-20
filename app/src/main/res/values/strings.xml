@@ -22,4 +22,6 @@
         <item>Hello </item>
     </string-array>
     <string name="title_activity_detail_list_item">DetailListItem</string>
+    <string name="search">search</string>
+    <string name="cart">Cart</string>
 </resources>
